@@ -32,8 +32,20 @@
         <Button Content="Speichern..." Command="{Binding SaveToFileCommand}" HorizontalAlignment="Left" Margin="254,449,0,0" 
                 VerticalAlignment="Top" Height="28" Width="82"/>
 
-        <ListBox d:ItemsSource="{d:SampleData ItemCount=5}" Margin="362,10,358,10" 
+        <ListBox d:ItemsSource="{d:SampleData ItemCount=5}" Margin="362,10,358,307" 
                  ItemsSource="{Binding AvailableActions}" SelectedItem="{Binding SelectedAvailableAction}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Vertical">
+                        <TextBlock FontWeight="Bold" Text="{Binding Name}" />
+                        <TextBlock Text="{Binding Description}" />
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <ListBox d:ItemsSource="{d:SampleData ItemCount=5}" Margin="362,493,358,10" 
+            ItemsSource="{Binding AvailablePresets}" SelectedItem="{Binding SelectedPreset}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Vertical">
@@ -47,7 +59,8 @@
         <TextBox HorizontalAlignment="Left" Margin="847,0,0,0" TextWrapping="Wrap" 
                   Text="{Binding Path=GeneratedContent}" 
                   AcceptsReturn="True" AcceptsTab="True" VerticalAlignment="Center" 
-                  Width="319" Height="724" />
+                  Width="319" Height="736" />
+        
 
     </Grid>
 </Window>
