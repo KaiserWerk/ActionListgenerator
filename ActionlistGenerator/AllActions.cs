@@ -182,21 +182,102 @@ namespace ActionlistGenerator
             new XAttribute("ignoreErrorsInIteration", "false"),
             new XAttribute("propertyName", "listProperty")
         ));
-        private static Action getDataFromSap = new Action("getDataFromSap", "", null);
-        private static Action milestone = new Action("milestone", "", null);
-        private static Action mkDir = new Action("mkDir", "", null);
-        private static Action move = new Action("move", "", null);
-        private static Action property = new Action("property", "", null);
-        private static Action rename = new Action("rename", "", null);
-        private static Action searchAndReplace = new Action("searchAndReplace", "", null);
-        private static Action setOrderBack = new Action("setOrderBack", "", null);
-        private static Action setOrderState = new Action("setOrderState", "", null);
-        private static Action sleep = new Action("sleep", "", null);
-        private static Action touch = new Action("touch", "", null);
-        private static Action transform = new Action("transform", "", null);
-        private static Action unzip = new Action("unzip", "", null);
-        private static Action validateXml = new Action("validateXml", "", null);
-        private static Action zip = new Action("zip", "", null);
+        private static Action getDataFromSap = new Action("getDataFromSap", "Importiert Produkte von SAP zu EPIM.", new XElement("getDataFromSap",
+            new XElement("sapConnectConfigFile", "${workDir}/sapConn.xml"),
+            new XElement("runMode", "multiFile|singleFile|epim"),
+            new XElement("rfcConfigFile", "${workDir}/rfcConn.xml"),
+            new XElement("epimSelectStatement", "some select statement"),
+            new XElement("outputDir", "${sessionWorkDir}/result.xml"),
+            new XElement("outputToProperty", "false"),
+            new XElement("postProcessingActionList", "${actionlistDir}/000_some-steps.actionlist.xml"),
+            new XElement("cleanupActionList", "${actionlistDir}/000_cleanup.actionlist.xml"),
+            new XElement("maxMaterialNumbers", "1000"),
+            new XElement("testMaterialNumbers", "1,3,666")
+        ));
+        private static Action milestone = new Action("milestone", "Speichert den Status eines Prozess, sodass er später fortgeführt werden kann.", new XElement("milestone", 
+            new XAttribute("name", "name of the milstone")
+        ));
+        private static Action mkDir = new Action("mkDir", "Erstellt ein Verzeichnis, ggfs. rekursiv.", new XElement("mkDir",
+            new XAttribute("dir", "${sessionWorkDir}/generated-files")
+        ));
+        private static Action move = new Action("move", "Verschiebt Dateien.", new XElement("move",
+            new XAttribute("overwriteTarget", "true"),
+            new XElement("file", "${VMWORK}/somefile.txt"),
+            new XElement("targetDir", "${VMHANDOVER}"),
+            new XElement("targetFileName", "movedFile.txt")
+        ));
+        private static Action property = new Action("property", "Deklariert/setzt eine Variable.", new XElement("move",
+            new XAttribute("name", "myProperty"),
+            new XAttribute("value", "my property value"),
+            new XAttribute("file", "${VMWORK}/sourceFile.txt"),
+            new XAttribute("overwrite", "true"),
+            new XAttribute("handout", "true"),
+            new XAttribute("xpath", "count(//item)"),
+            new XAttribute("xpathSourceProperty", "sourceProp")
+        ));
+        private static Action rename = new Action("rename", "Benennt Dateien und Verzeichniss um.", new XElement("rename",
+            new XElement("sourcePath", "${workDir}/important-file.xml"),
+            new XElement("targetName", "newname.xml")
+        ));
+        private static Action searchAndReplace = new Action("searchReplace", "Ersetzt Daten in Dateien.", new XElement("searchandreplace",
+            new XAttribute("encoding", "utf-8"),
+            new XElement("sourceFile", "important-file.xml"),
+            new XElement("targetFile", "${sessionWorkDir}/replaced.xml"),
+            new XElement("searchReplacePair")
+        ));
+        private static Action setOrderBack = new Action("setOrderBack", "Setzt eine JobScheduler Order zurück.", new XElement("setOrderBack"));
+        private static Action setOrderState = new Action("setOrderState", "Setzen den Status der Order.", new XElement("setOrderState",
+            new XAttribute("value", "200")
+        ));
+        private static Action sleep = new Action("sleep", "Blockiert die Ausführung für die angegebene Zeitdauer.", new XElement("sleep",
+            new XAttribute("hours", "0"),
+            new XAttribute("minutes", "0"),
+            new XAttribute("seconds", "0"),
+            new XAttribute("milliseconds", "0")
+        ));
+        private static Action touch = new Action("touch", "Erstellt eine leere Datei", new XElement("touch",
+            new XAttribute("file", "${exportDir}/export.xml")
+        ));
+        private static Action transform = new Action("transform", "Führt eine XSL-Transformation durch.", new XElement("transform",
+            new XAttribute("indent", "true"),
+            new XElement("inputFile", "${sessionWorkDir}/input.xml"),
+            new XElement("inputProperty", "someProperty"),
+            new XElement("xslProcessor", "saxon2"),
+            new XElement("stylesheet", "${xslDir}/my-transformation.xsl"),
+            new XElement("outputFile", "${sessionWorkDir}/output.xml"),
+            new XElement("outputProperty", "outProperty"),
+            new XElement("param",
+                new XAttribute("name", "paramName1"),
+                new XAttribute("value", "some custom value 1")
+            ),
+            new XElement("param",
+                new XAttribute("name", "paramName2"),
+                new XAttribute("value", "some custom value 2")
+            )
+        ));
+        private static Action unzip = new Action("unzip", "Entpackt eine Zip-Datei.", new XElement("unzip",
+            new XAttribute("ignoreNoFilesFound", "false"),
+            new XElement("file", "${sessionBackupDir}/input.zip"),
+            new XElement("targetBaseDir", "${sessionWorkDir}"),
+            new XElement("targetDirName", "input")
+        ));
+        private static Action validateXml = new Action("validateXML", "Validiert eine XML-Datei gegen ein XSD-Schema.", new XElement("validateXML",
+            new XAttribute("failOnError", "true"),
+            new XElement("inputFile", "${sessionWorkDir}/created.xml"),
+            new XElement("inputProperty", "inputProp"),
+            new XElement("schemaFile", "${xslDir}/schema.xsd"),
+            new XElement("logFile", "${sessionWorkDir}/validate-xml.log"),
+            new XElement("logProperty", "outputProp")
+        ));
+        private static Action zip = new Action("zip", "Erstellt eine Zip-Datei aus Dateien und Verzeichnissen.", new XElement("zip",
+            new XAttribute("ignoreNoFilesFound", "false"),
+            new XElement("sourceFolder", "${langWorkDir}/toBeZipped"),
+            new XElement("sourcePattern", ".*"),
+            new XElement("targetDir", "${langWorkDir}"),
+            new XElement("targetFileName", "langBackup"),
+            new XElement("sourceDir", "${langWorkDir}/toBeZipped"),
+            new XElement("file", "${langWorkDir}/eng.txt")
+        ));
 
         private static List<Action> list = new List<Action>() 
         { 
