@@ -23,9 +23,9 @@
             </ListBox.ItemTemplate>
         </ListBox>
 
-        <Button Content="Hinzufügen" Command="{Binding AddActionCommand}" HorizontalAlignment="Left" Margin="254,278,0,0" 
+        <Button Content="Hinzufügen" Command="{Binding AddActionCommand}" HorizontalAlignment="Left" Margin="254,244,0,0" 
                 VerticalAlignment="Top" Height="29" Width="82"/>
-        <Button Content="Entfernen" Command="{Binding RemoveActionCommand}" HorizontalAlignment="Left" Margin="254,335,0,0" 
+        <Button Content="Entfernen" Command="{Binding RemoveActionCommand}" HorizontalAlignment="Left" Margin="254,294,0,0" 
                 VerticalAlignment="Top" Height="29" Width="82"/>
         <Button Content="Generieren" Command="{Binding GenerateCommand}" HorizontalAlignment="Left" Margin="254,392,0,0" 
                 VerticalAlignment="Top" Height="29" Width="82"/>
@@ -64,6 +64,8 @@
             VerticalAlignment="Top" Height="49" Width="82">
             <TextBlock TextWrapping="Wrap">Aus Preset generieren</TextBlock>
         </Button>
+        <Button Content="Liste leeren" Command="{Binding ClearListCommand}" HorizontalAlignment="Left" Margin="254,341,0,0" 
+            VerticalAlignment="Top" Height="29" Width="82"/>
 
 
     </Grid>

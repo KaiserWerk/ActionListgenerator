@@ -25,6 +25,7 @@ namespace ActionlistGenerator
         public RelayCommand GenerateCommand { get; }
         public RelayCommand GenerateFromPresetCommand { get; }
         public RelayCommand SaveToFileCommand { get; }
+        public RelayCommand ClearListCommand { get; }
 
         public ViewModel()
         {
@@ -33,9 +34,15 @@ namespace ActionlistGenerator
             this.GenerateCommand = new RelayCommand(this.GenerateExecute);
             this.GenerateFromPresetCommand = new RelayCommand(this.GenerateFromPresetExecute);
             this.SaveToFileCommand = new RelayCommand(this.SaveToFileExecute);
+            this.ClearListCommand = new RelayCommand(this.ClearListExecute);
 
             this.AvailableActions = AllActions.ListOfAvailableActions;
             this.AvailablePresets = AllPresets.ListOfAvailablePresets;
+        }
+
+        private void ClearListExecute()
+        {
+            this.SelectedActions.Clear();
         }
 
         private void AddActionExecute()
